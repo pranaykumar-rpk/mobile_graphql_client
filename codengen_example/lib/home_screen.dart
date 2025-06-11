@@ -1,4 +1,5 @@
 import 'package:codengen_example/accounts_list_screen.dart';
+import 'package:codengen_example/notifications_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -21,6 +22,17 @@ class HomeScreen extends StatelessWidget {
                 );
               },
               child: Text('Accounts'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NotificationsScreen(),
+                  ),
+                );
+              },
+              child: Text('Notifications'),
             ),
           ],
         ),
