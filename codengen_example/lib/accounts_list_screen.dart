@@ -1,4 +1,6 @@
+import 'package:codengen_example/account_details_screen.dart';
 import 'package:flutter/material.dart';
+
 import 'package:mobile_graphql_client/features/accounts/accounts_service.dart';
 import 'package:mobile_graphql_client/features/accounts/fetch_accounts.graphql.dart';
 
@@ -38,9 +40,21 @@ class _AccountsListScreenState extends State<AccountsListScreen> {
             child: ListView.builder(
               itemCount: accounts?.length,
               itemBuilder: (context, index) {
+                Query$FetchAccounts$listAccounts? account = accounts![index];
                 return ListTile(
-                  title: Text(accounts![index]?.name ?? ''),
-                  subtitle: Text(accounts![index]?.number ?? ''),
+                  title: Text(account?.name ?? ''),
+                  subtitle: Text(account?.number ?? ''),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (context) => AccountDetailsScreen(
+                              accountId: account?.id ?? '',
+                            ),
+                      ),
+                    );
+                  },
                 );
               },
             ),

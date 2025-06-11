@@ -28,17 +28,15 @@ Future<List<Query$FetchAccounts$listAccounts?>?> fetchAccounts(
     return [];
   }
 
-  print("No errors");
-
   return Query$FetchAccounts.fromJson(result.data!).listAccounts!;
 }
 
 Future<Query$FetchAccountDetails$getAccountDetails?> fetchAccountDetails(
   String workspaceID,
-  String accountID,
-  String location,
-  bool masked,
-) async {
+  String accountID, {
+  String location = 'INTERNAL',
+  bool masked = true,
+}) async {
   final client = GraphQLService().client;
 
   final result = await client.query(
@@ -50,6 +48,7 @@ Future<Query$FetchAccountDetails$getAccountDetails?> fetchAccountDetails(
         'location': location,
         'masked': masked,
       },
+      fetchPolicy: FetchPolicy.noCache,
     ),
   );
 
