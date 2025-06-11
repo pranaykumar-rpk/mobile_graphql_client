@@ -1,0 +1,5 @@
+mutation UpdateTenantAccountName($accountID: ID!, $newName: String!) {
+  updateTenantAccountName(accountID: $accountID, newName: $newName) {
+    newName
+  }
+}

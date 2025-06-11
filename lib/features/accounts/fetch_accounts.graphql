@@ -1,0 +1,34 @@
+query FetchAccounts($workspaceID: ID!) {
+  listAccounts(workspaceID: $workspaceID) {
+    id
+    name
+    type
+    number
+    dateOpened
+    source
+    status
+    creditInformation {
+      interestPaidYTD
+      interestEarnedCM
+    }
+    balances {
+      availableBalance
+      currentBalance
+    }
+    product {
+      id
+      number
+      type
+      typeName
+      subType
+      subTypeName
+    }
+    creditInterest {
+      rate
+    }
+    routingnumbers {
+      number
+      type
+    }
+  }
+}

@@ -1,0 +1,11 @@
+query ListWorkspaces {
+  listWorkspaces {
+    defaultId
+    workspaces {
+      id
+      name
+      shortTitle
+      workspaceType
+    }
+  }
+}

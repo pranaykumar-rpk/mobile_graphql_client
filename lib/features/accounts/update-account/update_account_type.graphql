@@ -1,0 +1,13 @@
+mutation UpdateAccount(
+  $accountID: ID!
+  $location: Location
+  $accountUpdate: AccountUpdateInput
+) {
+  updateAccount(
+    accountID: $accountID
+    location: $location
+    accountUpdate: $accountUpdate
+  ) {
+    id
+  }
+}

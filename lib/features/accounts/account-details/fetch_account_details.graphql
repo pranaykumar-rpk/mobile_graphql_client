@@ -1,0 +1,67 @@
+query FetchAccountDetails(
+  $workspaceID: ID!
+  $accountID: ID!
+  $location: Location
+  $masked: Boolean
+) {
+  getAccountDetails(
+    workspaceID: $workspaceID
+    accountID: $accountID
+    location: $location
+    masked: $masked
+  ) {
+    id
+    name
+    type
+    number
+    dateOpened
+    dateClosed
+    source
+    status
+    creditInformation {
+      interestPaidYTD
+      interestEarnedCM
+    }
+    balances {
+      availableBalance
+      currentBalance
+      cashBalance
+      minimumBalance
+      outstandingBalance
+      principalBalance
+      accruedInterest
+      investmentBalance
+      payOffAmount
+      ledgerBalance
+      originalPrincipal
+    }
+    product {
+      id
+      number
+      type
+      typeName
+      subType
+      subTypeName
+    }
+    creditInterest {
+      rate
+      termsUnit
+      terms
+      perDiem
+      frequency
+      interestRateType
+    }
+    loanInterest {
+      rate
+      termsUnit
+      terms
+      perDiem
+      frequency
+      interestRateType
+    }
+    routingnumbers {
+      number
+      type
+    }
+  }
+}

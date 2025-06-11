@@ -1,0 +1,2208 @@
+type ACHCutOffTime {
+  timezone: String
+  disabledFromTime: String
+}
+
+type Account {
+  id: ID!
+  type: String!
+  number: String!
+  parentId: String
+  entities: [Entity!]!
+  name: String
+  title: String
+  iban: String
+  routingnumbers: [RoutingNumber]
+  balances: Balances
+  dateCreated: String!
+  dateOpened: String
+  dateLastUpdated: String
+  dateClosed: String
+  currencyCode: String!
+  status: String
+  source: String
+  interestReporting: Boolean
+  preferences: [Attribute!]!
+  product: Product
+  tenantId: String
+  creditInterest: InterestInformation
+  loanInterest: InterestInformation
+  creditInformation: CreditInformation
+  PaymentNetworks: [PaymentNetwork]
+  institution: FinancialInstitution
+}
+
+enum AccountCategory {
+  PERSONAL
+  BUSINESS
+}
+
+type AccountEmployee {
+  id: ID!
+  type: String!
+  number: String!
+  userType: UserType
+  name: String
+  status: String
+  dateOpened: String
+  balances: BalancesEmployee
+  dateCreated: String!
+}
+
+input AccountEntitlementsGroupsUpdate {
+  externalAccountId: String
+  groupsToAssign: [EntitlementsGroupInput]
+  groupsToUnassign: [EntitlementsGroupInput]
+}
+
+input AccountIdList {
+  accountIds: [String!]
+}
+
+type AccountIdentity {
+  id: ID!
+  externalId: String!
+  externalEntityId: String!
+  externalTenantId: String!
+}
+
+type AccountIdentityList {
+  status: Boolean!
+  messages: [String]
+  totalItems: Int!
+  nextCursor: String
+  accounts: [AccountIdentity!]!
+}
+
+type AccountLimits {
+  accountExternalId: String
+  accountName: String
+  accountNumber: String
+  limitUsage: [LimitUsage]
+}
+
+"""
+TODO: Use this model to enable paging
+"""
+type AccountList {
+  status: Boolean!
+  messages: [String]
+  totalItems: Int!
+  nextCursor: String
+  accounts: [Account!]!
+}
+
+type AccountSummary {
+  account: AccountSummaryAccountDetails
+  entityProfiles: AccountSummaryIdentityList
+  entities: AccountSummaryEntityList
+}
+
+type AccountSummaryAccountDetails {
+  id: ID
+  type: String
+  number: String
+  name: String
+  routingnumbers: [RoutingNumber]
+  balances: BalancesEmployee
+  dateCreated: String!
+  dateOpened: String
+  dateClosed: String
+  status: String
+  creditInterest: InterestInformation
+  creditInformation: CreditInformation
+}
+
+type AccountSummaryEntity {
+  id: String
+  name: String
+  type: String
+}
+
+type AccountSummaryEntityList {
+  status: Boolean
+  totalItems: Int
+  entities: [AccountSummaryEntity]!
+}
+
+type AccountSummaryIdentity {
+  externalId: String
+  firstname: String
+  fullname: String
+  lastname: String
+  lastLogin: String
+  status: String
+  preferences: [Attribute]
+}
+
+type AccountSummaryIdentityList {
+  status: Boolean
+  totalItems: Int
+  identities: [AccountSummaryIdentity]
+}
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+  LOAN
+}
+
+type AccountUpdate {
+  newName: String
+}
+
+input AccountUpdateInput {
+  newName: String
+  accountCategory: AccountCategory
+  accountType: AccountType
+}
+
+type AccountsList {
+  status: Boolean!
+  messages: [String]
+  totalItems: Int!
+  nextCursor: String
+  accounts: [AccountEmployee]!
+}
+
+type ActionTypeConfiguration {
+  id: ID!
+  name: String!
+  actionType: String!
+  actionCategory: String!
+  supportedNotifications: [String!]!
+}
+
+type ActionTypeList {
+  actionTypes: [ActionTypeConfiguration!]!
+}
+
+type Address {
+  type: String
+  line1: String
+  line2: String
+  line3: String
+  city: String
+  state: String
+  postalCode: String
+  country: String
+  primary: Boolean
+}
+
+type Addresses {
+  id: String
+  type: String
+  name: String
+  line1: String
+  line2: String
+  line3: String
+  city: String
+  state: String
+  postalCode: String
+  country: String
+  primary: Boolean
+}
+
+input AddressesInput {
+  id: String
+  type: String
+  name: String
+  line1: String
+  line2: String
+  line3: String
+  city: String
+  state: String
+  postalCode: String
+  country: String
+  primary: Boolean
+}
+
+type Application {
+  externalId: String!
+  title: String!
+  type: String!
+  status: ApplicationStatus!
+  progressPercentage: Int!
+}
+
+type ApplicationDetails {
+  externalId: String
+  title: String
+  type: String
+  status: ApplicationStatus
+  progressPercentage: Int
+  stages: [ApplicationStage]
+  documents: [ApplicationDocuments]
+}
+
+type ApplicationDocuments {
+  externalId: String
+  name: String
+  classification: String
+  status: ApplicationStatus
+}
+
+type ApplicationStage {
+  sequence: Int
+  name: String
+  status: ApplicationStatus
+  progressPercentage: Int
+}
+
+enum ApplicationStatus {
+  COMPLETE
+  IN_PROGRESS
+  PENDING
+}
+
+type Attribute {
+  name: String!
+  value: String!
+}
+
+type Audit {
+  id: ID!
+  description: String!
+  permission: String!
+  messageCategory: String!
+  messageStatus: String!
+  messageType: String!
+  createdDate: String!
+  userAgent: String
+  sessionState: String
+  showInFeed: Boolean
+  metaData: String
+}
+
+type AuditEmployee {
+  id: ID!
+  description: String!
+  createdDate: String!
+  permission: String!
+  messageCategory: String!
+}
+
+type AuditGroup {
+  externalUserId: String
+  correlationId: ID!
+  messageKey: String
+  permission: String
+  messageStatus: String
+  createdDate: String
+  metadata: [Metadata]
+  auditMessages: [Audit]
+  username: String
+  firstName: String
+  lastName: String
+  userAgent: String
+}
+
+type AuditGroupResponseList {
+  auditGroups: [AuditGroup]
+  nextCursor: String
+}
+
+type BalanceItem {
+  availableBalance: Float
+  count: Int
+  asOfDateTime: String
+}
+
+type Balances {
+  availableBalance: Float
+  currentBalance: Float
+  cashBalance: Float
+  minimumBalance: Float
+  outstandingBalance: Float
+  principalBalance: Float
+  accruedInterest: Float
+  investmentBalance: Float
+  payOffAmount: Float
+  ledgerBalance: Float
+  originalPrincipal: Float
+  count: Int
+}
+
+type BalancesEmployee {
+  availableBalance: Float
+  currentBalance: Float
+}
+
+input BannerRequest {
+  name: String
+  title: String
+  channel: Channel!
+  bodyText: String!
+  ctaText: String
+  ctaUrl: String
+  startDateTime: String!
+  endDateTime: String!
+}
+
+type BannerResponse {
+  id: String
+  name: String
+  title: String
+  channel: Channel
+  bodyText: String
+  ctaText: String
+  ctaUrl: String
+  startDateTime: String
+  endDateTime: String
+  insertedAt: String
+  updatedAt: String
+}
+
+type BinaryItem {
+  format: String
+  itemId: String
+}
+
+type BinaryItemList {
+  binaries: [BinaryItem]
+}
+
+enum CacheStatusEnum {
+  HUB_AWARE
+  CORE_DIRECT
+}
+
+type Card {
+  type: CardType!
+  id: ID!
+  subtype: String
+  name: String
+  number: String
+  startDate: String
+  expiryDate: String
+  closeDate: String
+  holderName: String!
+  network: Network!
+  status: CardStatus!
+  currencyCode: String!
+  attributes: [Attribute]
+  cardLimit: [CardLimit]
+  accounts: [Account]
+}
+
+enum CardAction {
+  LOCK
+  UNLOCK
+  ACTIVATE
+  REPLACE
+  PINREQUEST
+  PINRESET
+  LIMITS
+}
+
+type CardLimit {
+  id: ID!
+  channel: String
+  frequency: String
+  amount: Int
+  maxAmount: Int
+  minAmount: Int
+  type: CardLimitType
+}
+
+enum CardLimitType {
+  ATM_USAGE
+  ONLINE_PURCHASE
+  IN_STORE_PURCHASE
+}
+
+enum CardStatus {
+  ACTIVE
+  PENDING
+  BLOCKED
+  CANCELLED
+  EXPIRED
+  LOCKED
+}
+
+enum CardType {
+  CREDIT
+  DEBIT
+  LOYALTY
+  ATM
+  VIRTUAL
+  DEPOSIT
+}
+
+enum Channel {
+  WEB
+  MOBILE
+  BOTH
+}
+
+type Children {
+  parentId: String
+  id: String
+  externalParentId: String
+  externalId: String
+  displayName: String
+  children: [Children]
+}
+
+type Condition {
+  key: String
+  value: String
+}
+
+type ContactPoint {
+  id: String
+  type: String
+  name: String
+  prefix: String
+  value: String
+  suffix: String
+  primary: Boolean
+}
+
+type ContactPoints {
+  id: String
+  type: String
+  name: String
+  prefix: String
+  value: String
+  suffix: String
+  primary: Boolean
+  mfaEnabled: Boolean
+}
+
+input ContactPointsInput {
+  id: String
+  type: ContactTypeEnum
+  name: String
+  prefix: String
+  value: String
+  suffix: String
+  primary: Boolean
+  mfaEnabled: Boolean
+}
+
+enum ContactTypeEnum {
+  SMS
+  EMAIL
+  VOICE
+}
+
+type Context {
+  id: String!
+  name: String!
+  workspaceType: WorkspaceType!
+}
+
+enum CoreStatusEnum {
+  ONLINE
+  OFFLINE
+  PARTIAL
+}
+
+input CreateAccount {
+  externalId: String
+  externalTenantId: String
+}
+
+input CreateEntityDetails {
+  type: EntityType!
+  subtype: String
+  externalId: String
+  externalTenantId: String
+  accounts: [CreateAccount]
+  users: [CreateUser]
+}
+
+input CreateEntityRequest {
+  entities: [String!]
+}
+
+input CreateUser {
+  externalId: String
+  externalIDPReference: String
+  segments: [String]
+  externalTenantId: String
+  userType: UserType
+}
+
+input CreateUserList {
+  type: EntityType
+  subtype: String
+  externalId: String
+  accounts: [CreateAccount]
+  users: [CreateUser]
+}
+
+input CreateUserRequest {
+  username: String
+  firstName: String!
+  lastName: String!
+  email: String!
+  userType: UserType
+  contactPoints: [ContactPointsInput]
+}
+
+type CreditInformation {
+  interestPaidYTD: Float
+  interestEarnedCM: Float
+}
+
+type Creditor {
+  id: ID!
+  number: String
+  name: String
+}
+
+type Debtor {
+  id: ID!
+  number: String
+  name: String
+}
+
+type Device {
+  id: ID!
+  externalTenantId: String
+  externalUserId: String
+  deviceId: String!
+  status: DeviceStatus
+  platform: Platform
+  pushToken: String!
+  dateCreated: String
+  updateDate: String
+}
+
+input DeviceInput {
+  id: ID
+  deviceId: String!
+  platform: Platform!
+  pushToken: String!
+  status: DeviceStatus
+}
+
+enum DeviceStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+type Document {
+  id: String
+  documentType: String
+  name: String
+  dateCreated: String
+  nextCursor: String
+  items: BinaryItemList
+}
+
+input EnrollPrimaryUserRequest {
+  role: UserRole!
+  type: UserType!
+  isEmployee: Boolean!
+  externalProfileId: String!
+  entitledEntities: [EntityExternalIdentifier]
+}
+
+type EnrollPrimaryUserResponse {
+  permissionProfileDetails: PermissionProfileDetails
+  idpUser: UserProfile
+  entitlementsUser: User
+}
+
+type Entities {
+  externalId: String
+  allowedActions: [String]
+  primary: Boolean
+  isUnique: Boolean
+  addresses: [Addresses]
+  contactPoints: [ContactPoints]
+  type: TypeEnum
+  name: String
+}
+
+type EntitledAccount {
+  id: String
+  externalId: String
+  externalEntityId: String
+  externalTenantId: String
+  externalPermissionProfileId: String
+  entitlements: [Entitlement]
+  entitlementsGroups: [EntitlementsGroup]
+}
+
+type EntitledAccountEmployee {
+  id: String
+  externalId: String
+  name: String
+  accountNumber: String
+  externalEntityId: String
+  externalTenantId: String
+  externalPermissionProfileId: String
+  entitlements: [Entitlement]
+  entitlementsGroups: [EntitlementsGroup]
+}
+
+input EntitledAccountInput {
+  externalId: String
+  entitlementsGroups: [EntitlementsGroupInput]
+}
+
+type EntitledEntity {
+  id: String
+  externalId: String
+  externalTenantId: String
+  type: EntityType
+  subType: String
+  externalPermissionProfileId: String
+  isPrimary: Boolean
+  entitlements: [Entitlement]
+  entitlementsGroups: [EntitlementsGroup]
+}
+
+type EntitledEntityAccounts {
+  entity: User!
+  accounts: AccountsList!
+}
+
+type EntitledEntityEmployee {
+  id: String
+  externalId: String
+  name: String
+  externalTenantId: String
+  type: EntityType
+  subType: String
+  externalPermissionProfileId: String
+  isPrimary: Boolean
+  entitlements: [Entitlement]
+  entitlementsGroups: [EntitlementsGroup]
+}
+
+type Entitlement {
+  externalId: String
+  functionDefinition: FunctionDefinition
+  permissions: [PermissionEnum]
+}
+
+"""
+???? These are expected Categories
+"""
+enum EntitlementCategory {
+  OVERVIEW
+  MONEY_MOVEMENT
+  ADMINISTRATION
+  NOTIFICATION
+  DASHBOARD
+  SELF_SERVICE
+  SECURITY
+  REPORTING
+  COMMUNICATION
+}
+
+type EntitlementChange {
+  permissionProfileList: [PermissionProfileDetails]
+}
+
+input EntitlementInput {
+  externalId: String
+  functionDefinition: FunctionDefinitionInput
+  permissions: [PermissionEnum]
+}
+
+type Entitlements {
+  functionDefinition: FunctionDefinition
+  permissions: [PermissionEnum]
+}
+
+type EntitlementsGroup {
+  externalParentId: String
+  localized: Boolean
+  inherited: Boolean
+  externalId: String
+  externalTenantId: String
+  name: String
+  itemTypes: [ItemType]
+  userTypes: [UserType]
+  entitlements: [Entitlement]
+  assigned: Boolean
+}
+
+input EntitlementsGroupInput {
+  externalId: String
+}
+
+type EntitlementsGroupList {
+  totalItems: Int
+  nextCursor: String
+  entitlementsGroups: [EntitlementsGroup]
+  status: Boolean
+}
+
+input EntitlementsGroupsInput {
+  externalId: String
+  name: String
+  itemTypes: [ItemType]
+  userTypes: [UserType]
+  entitlements: [EntitlementInput]
+}
+
+input EntitlementsGroupsUpdate {
+  groupsToAssign: [EntitlementsGroupInput]
+  groupsToUnassign: [EntitlementsGroupInput]
+}
+
+type Entity {
+  type: EntityType!
+  id: ID!
+  name: String!
+  externalId: String
+  tenantId: String
+  externalTenantId: String
+  subtype: String
+
+  """
+  taxInformation: [TaxInformation!]!
+  identityInformation: [IdentityInformation!]!
+  """
+  active: Boolean!
+  dateCreated: String!
+}
+
+type EntityDetails {
+  type: EntityType!
+  subtype: String
+  externalId: String
+  externalTenantId: String
+  accounts: [Account]
+  users: [User]
+}
+
+type EntityEmployee {
+  externalId: String
+  name: String
+  primary: Boolean
+  isUnique: Boolean
+}
+
+input EntityExternalIdentifier {
+  externalId: String!
+}
+
+type EntityLimits {
+  entityExternalId: String
+  entityName: String
+  entityType: String
+  isPrimary: Boolean
+  limitUsage: [LimitUsage]
+  accountLimits: [AccountLimits]
+}
+
+type EntityList {
+  status: Boolean
+  messages: [String]
+  totalItems: Int
+  nextCursor: String
+  entities: [Entity]
+}
+
+type EntitySummaryDetailsAccounts {
+  id: ID
+  type: String
+  number: String
+  name: String
+  status: String
+  balances: BalancesEmployee
+  dateClosed: String
+  preferences: [Attribute]
+}
+
+type EntitySummaryEntity {
+  id: String
+  fullname: String
+  taxInformation: [TaxInformation]
+  addresses: [Address]
+  preferences: [Attribute]
+}
+
+type EntitySummaryEntityProfiles {
+  externalId: String
+  firstname: String
+  lastname: String
+  fullname: String
+  lastLogin: String
+  status: String
+  preferences: [Attribute]
+}
+
+type EntitySummaryWithAccountList {
+  status: Boolean
+  messages: [String]
+  totalItems: Int
+  nextCursor: String
+  accounts: [EntitySummaryDetailsAccounts]
+}
+
+type EntitySummaryWithEntityProfileList {
+  status: Boolean
+  messages: [String]
+  totalItems: Int
+  nextCursor: String
+  identities: [EntitySummaryEntityProfiles]
+}
+
+enum EntityType {
+  PERSON
+  BUSINESS
+  SYSTEM
+  INDIVIDUAL
+}
+
+type EntityWithAccountAndEntityProfileSummary {
+  entity: EntitySummaryEntity
+  entityProfiles: EntitySummaryWithEntityProfileList
+  accounts: EntitySummaryWithAccountList
+}
+
+type ExchangeAccount {
+  id: ID!
+  name: String
+  title: String
+  product: Product
+  currencyCode: String!
+  balances: Balances
+  routingNumbers: [RoutingNumber]
+  number: String!
+  location: String!
+  institution: FinancialInstitution
+  externalAccountType: AccountType
+  externalAccountCategory: AccountCategory
+  readOnly: Boolean
+}
+
+type ExchangeAccountList {
+  direction: String!
+  accounts: [ExchangeAccount]!
+}
+
+type ExchangeTransaction {
+  id: ID!
+  amount: Float!
+  executionDate: String!
+  creditor: Creditor!
+  debtor: Debtor!
+  isRecurring: Boolean
+  type: String
+  memo: String
+}
+
+type ExchangeTransactionsList {
+  nextCursor: String
+  totalItems: Int
+  exchanges: [ExchangeTransaction]
+}
+
+enum ExchangeType {
+  ACH
+  WIRE
+  P2P
+  A2A
+  M2M
+  CHECK
+  CHIPS
+  REAL_TIME
+  LVTS
+  ACSS
+  BILLPAY
+  QUICK
+  REWARD
+  DEPOSIT
+}
+
+enum Facet {
+  ACCOUNT
+  BALANCE
+  BANK
+  CARD
+  ENTITY
+  ENTITYPROFILE
+  EXCHANGE
+  FILE
+  PRODUCT
+  STATEMENT
+  DOCUMENT
+  TRANSACTION
+  IDENTITY
+}
+
+type FeatureFlag {
+  externalId: String!
+  featureFlagName: String
+  enabled: Boolean!
+}
+
+input FeatureFlagUpdate {
+  externalFunctionDefinitionId: String!
+  featureFlagName: String
+  enabled: Boolean!
+}
+
+type FeatureFlagsList {
+  featureFlags: [FeatureFlag]
+}
+
+type FederalHoliday {
+  id: String
+  externalId: String
+  date: String
+  effectiveDate: String
+  insertedAt: String
+  updatedAt: String
+}
+
+input FederalHolidayRequest {
+  externalId: String
+  date: String
+}
+
+type FederalHolidaysResponse {
+  achCutOffTime: ACHCutOffTime
+  federalHoliday: [FederalHoliday]
+}
+
+type FederalHolidaysUserResponse {
+  achCutOffTime: ACHCutOffTime
+  disabledDates: [String]
+}
+
+type FinancialInstitution {
+  logo: String
+  icon: String
+  tile: String
+  primaryColor: String
+}
+
+type FiniteEntities {
+  entities: [FiniteEntity]
+}
+
+type FiniteEntity {
+  type: String
+  subType: String
+  id: String
+  name: String
+  taxInformation: [TaxInformation]
+  addresses: [Address]
+  contactPoints: [ContactPoint]
+}
+
+type FiniteEntityDetails {
+  entity: FiniteEntity
+  entityProfiles: FiniteEntityProfiles
+}
+
+type FiniteEntityProfile {
+  type: String
+  id: String
+  fullname: String
+  firstname: String
+  lastname: String
+  addresses: [Address]
+  contactPoints: [ContactPoint]
+  taxInformation: [TaxInformation]
+}
+
+type FiniteEntityProfileDetails {
+  entityProfile: FiniteEntityProfile
+  entities: FiniteEntities
+}
+
+type FiniteEntityProfiles {
+  entityProfiles: [FiniteEntityProfile]
+}
+
+type FunctionDefinition {
+  externalId: String
+  externalTenantId: String
+  group: String
+  value: String
+  category: EntitlementCategory
+  types: [ItemType]
+  featureFlagName: String
+  enabled: Boolean
+}
+
+input FunctionDefinitionInput {
+  externalId: String
+  externalTenantId: String
+  group: String
+  value: String
+  category: EntitlementCategory
+  types: [ItemType]
+}
+
+type FunctionDefinitionList {
+  status: Boolean
+  messages: [String]
+  totalItems: Int
+  nextCursor: String
+  functionDefinitions: [FunctionDefinition]
+}
+
+input InstructedAmount {
+  amount: String
+  currencyCode: String
+}
+
+type InstructedAmountSigned {
+  amount: String
+  currencyCode: String
+}
+
+type InterestInformation {
+  rate: Float
+  termsUnit: String
+  terms: Int
+  perDiem: Float
+  frequency: String
+  interestRateType: String
+}
+
+enum ItemType {
+  ENTITY
+  USER
+  ACCOUNT
+  TENANT
+  RULE_SET
+  FUNCTION_GROUP
+  FUNCTION_DEFINITION
+  ENTITLEMENT
+  ENTITLEMENT_GROUP
+  PERMISSION_PROFILE
+  UNDEFINED
+}
+
+type Items {
+  templateName: String
+  name: String
+  column: Int
+  entitlement: String
+  row: Int
+  type: String
+  items: [String]
+  variables: Variables
+}
+
+type Limit {
+  frequency: LimitFrequency!
+  debitAmount: Float!
+  creditAmount: Float!
+  count: Int!
+}
+
+type LimitAmounts {
+  debitRemaining: Float!
+  creditRemaining: Float!
+  countRemaining: Int!
+}
+
+enum LimitFrequency {
+  DAILY
+  MONTHLY
+  YEARLY
+}
+
+input LimitRequest {
+  frequency: LimitFrequency!
+  debitAmount: Float!
+  creditAmount: Float!
+  count: Int!
+}
+
+type LimitUsage {
+  frequency: LimitFrequency!
+  debitAmount: Float!
+  creditAmount: Float!
+  count: Int!
+  usedLimit: LimitAmounts!
+  remainingLimit: LimitAmounts!
+  usedLimitByUser: LimitAmounts
+}
+
+enum Location {
+  INTERNAL
+  EXTERNAL
+}
+
+type Message {
+  id: ID
+  sentAt: String
+  read: Boolean
+  draft: Boolean
+  body: String
+  senderExternalUserId: String
+  receiverExternalUserId: String
+  senderFirstName: String
+  senderLastName: String
+  receiverFirstName: String
+  receiverLastName: String
+}
+
+input MessageInput {
+  topic: String
+  draft: Boolean
+  body: String
+  read: Boolean
+  receiverExternalUserId: String
+}
+
+type MessageResponseList {
+  messages: [Audit]
+  totalItems: Int
+  nextCursor: String
+}
+
+type MessageResponseListEmployee {
+  messages: [AuditEmployee]
+  totalItems: Int
+  nextCursor: String
+}
+
+enum MessageThreadStatus {
+  NOT_STARTED
+  ACTIVE
+  RESOLVED
+}
+
+type MetaData {
+  additional: [Attribute]
+}
+
+type Metadata {
+  key: String
+  value: String
+}
+
+"""
+The Root Mutation for the application
+"""
+type Mutation {
+  createTenantUser(
+    tenantId: String
+    user: CreateUserRequest
+    workspaceID: ID!
+  ): User
+  deauthorizeUser(
+    externalTenantId: String
+    workspaceID: ID!
+    externalUserId: String!
+  ): Boolean
+  addTenantUserEntities(
+    tenantId: String
+    userId: String
+    user: CreateEntityRequest
+    workspaceID: ID!
+  ): User
+  updateTenantUserProfile(profile: UpdateTenantUserProfileRequest): UserProfile
+  readNotifications: String
+  updateTenantUserCredentials(newUserName: String, newPassword: String): Boolean
+  executePayment(payment: Payment): PaymentResult
+  createTenantUserActionConfiguration(
+    userActionRequest: UserActionRequest
+  ): Boolean
+  updateTenantUserActionConfiguration(
+    actionId: ID!
+    userActionRequest: UserActionRequest
+  ): Boolean
+  removeTenantUserActionConfiguration(actionId: ID!): Boolean
+  markReadUserNotifications(notificationIdList: [String!]): String
+  postTenantEntity(
+    externalTenantId: String!
+    createEntityDetails: CreateEntityDetails
+  ): EntityDetails
+  postTenantEntityUsers(
+    externalTenantId: String!
+    externalEntityId: String!
+    createUserList: CreateUserList
+  ): UserList
+  postTenantEntityAccounts(
+    externalTenantId: String!
+    externalEntityId: String!
+    accountList: CreateUserList
+  ): AccountIdentityList
+  putTenantEntity(
+    externalTenantId: String!
+    externalEntityId: String!
+    createEntityDetails: CreateEntityDetails
+  ): EntityDetails
+  putTenantEnrollmentUser(
+    workspaceID: ID!
+    userId: String!
+    permissionProfileDetails: UpdatePermissionProfileDetails
+  ): PermissionProfileDetails
+  updateTenantAccountName(accountID: ID!, newName: String): AccountUpdate
+  updateAccount(
+    accountID: ID!
+    location: Location
+    accountUpdate: AccountUpdateInput
+  ): Account
+  upsertTenantUserDevice(device: DeviceInput): Device
+  createTenantUserMessage(message: MessageInput!): String
+  replyToTenantUserMessage(threadId: ID!, message: MessageInput): String
+  deleteTenantUserMessage(messageId: ID!): Boolean
+  updateTenantUserMessage(messageId: ID!, message: MessageInput): String
+  resendInvitation(externalUserId: String!): Boolean
+  deleteTenantUserExchange(externalExchangeId: ID!): PaymentResult
+  enrollTenantEntity(
+    externalTenantId: String!
+    externalEntityId: String!
+  ): EntityDetails
+  enrollPrimaryUser(
+    externalTenantId: String!
+    enrollPrimaryUserRequest: EnrollPrimaryUserRequest
+  ): EnrollPrimaryUserResponse
+  signPayment(payment: Payment): PaymentSigned
+  acceptMyTerms(termIds: [String!]!): [String!]!
+}
+
+type Navigation {
+  altText: String
+  externalURI: String
+  name: String
+  entitlement: String
+  title: String
+  target: String
+  children: [String]
+  variables: Variables
+}
+
+enum Network {
+  VISA
+  MASTERCARD
+}
+
+type Notification {
+  id: String!
+  title: String!
+  message: String!
+  notificationType: typeEnum!
+  itemType: itemTypeEnum!
+  isRead: Boolean!
+  sentDateTime: String!
+  readDateTime: String
+  referenceItemId: String
+  metaData: String
+  updated: [NotificationReference!]
+}
+
+type NotificationList {
+  totalItems: Int
+  nextCursor: String
+  notifications: [Notification!]
+}
+
+type NotificationReference {
+  itemType: itemTypeEnum!
+  itemId: String!
+}
+
+enum OperatorEnum {
+  EQUAL
+  LIKE
+  GREATER
+  LESS
+  NOT_LIKE
+  NOT_EQUAL
+  IN
+  NOT_IN
+  STARTS_WITH
+  ENDS_WITH
+}
+
+input Payment {
+  digitalSignature: String
+  idempotencyKey: String
+  fromAccount: String!
+  executionDate: String
+  memo: String
+  paymentType: PaymentType
+  transferTransactionInformation: TransferInformation
+}
+
+type PaymentNetwork {
+  allowTo: Boolean
+  allowFrom: Boolean
+  type: ExchangeType
+}
+
+type PaymentResult {
+  status: String
+  reason: String
+  exchangeTransactionId: String
+}
+
+type PaymentSigned {
+  idempotencyKey: String!
+  digitalSignature: String!
+  fromAccount: String!
+  executionDate: String
+  memo: String
+  paymentType: PaymentType
+  transferTransactionInformation: TransferInformationSigned
+}
+
+enum PaymentType {
+  INTERNAL_TRANSFER
+  ACH_TRANSFER
+  BILL_PAY
+}
+
+enum PermissionEnum {
+  READ
+  CREATE
+  UPDATE
+  DELETE
+  LIST
+  TRANSACT
+  APPROVE
+  REJECT
+  LOCK
+  UNLOCK
+  RESET
+  ADMIN
+}
+
+type PermissionProfileDetails {
+  id: String
+  externalId: String
+  externalTenantId: String
+  externalUserId: String
+  defaultWorkspaceExternalId: String
+  type: PermissionProfileType
+  isMaster: Boolean
+  entitledEntities: [EntitledEntity]
+  entitledAccounts: [EntitledAccount]
+  userEntitlements: [Entitlement]
+  userEntitlementsGroups: [EntitlementsGroup]
+  workspaces: [Workspace]
+}
+
+type PermissionProfileDetailsEmployee {
+  id: String
+  externalId: String
+  externalTenantId: String
+  externalUserId: String
+  defaultWorkspaceExternalId: String
+  type: PermissionProfileType
+  isMaster: Boolean
+  entitledEntities: [EntitledEntityEmployee]
+  entitledAccounts: [EntitledAccountEmployee]
+  userEntitlements: [Entitlement]
+  userEntitlementsGroups: [EntitlementsGroup]
+  workspaces: [Workspace]
+}
+
+enum PermissionProfileType {
+  USER
+  EMPLOYEE
+}
+
+enum Platform {
+  ANDROID
+  IOS
+  WEB
+  MOBILE
+}
+
+type Product {
+  id: ID!
+  number: String
+  type: String!
+  typeName: String
+  subType: String
+  subTypeName: String
+}
+
+"""
+The Root Query for the application
+"""
+type Query {
+  listAccounts(workspaceID: ID!, masked: Boolean, location: Location): [Account]
+  getTenantUserExchangeAccounts(
+    accountID: ID
+    workspaceID: ID!
+    directionFilter: String!
+    paymentNetwork: String
+  ): ExchangeAccountList
+  getAccountDetails(
+    workspaceID: ID!
+    accountID: ID!
+    masked: Boolean
+    location: Location
+  ): Account
+  getAccountCard(accountId: ID!, cardId: ID!): Card
+  updateUserCardStatus(
+    accountId: ID!
+    cardId: ID!
+    cardAction: CardAction
+  ): Card
+  getAccountCards(accountId: ID!): [Card]
+  listWorkspaces(userId: String): WorkspaceList
+  listWorkspaceAccounts(
+    tenantId: String
+    userId: String!
+    workspaceID: ID!
+  ): AccountIdentityList
+  getAccountTransaction(accountID: ID!, transactionID: ID!): Transaction
+  listAccountTransactions(accountID: ID!, cursor: String): TransactionList
+  listUserTransactions(limit: String!): TransactionList
+  listAccountStatements(
+    accountID: ID!
+    cursor: String
+    startDate: String
+    endDate: String
+  ): StatementList
+  viewAccountStatementItem(statementId: String, itemId: String): String
+  listAuditMessages(
+    messageCategory: String
+    messageStatus: String
+    permission: String
+    startDate: String
+    endDate: String
+    cursor: String
+  ): MessageResponseList
+  listAuditMessagesSearch(
+    startDateTime: String
+    endDateTime: String
+    cursor: String
+    searchFilters: [searchFilter!]!
+  ): MessageResponseList
+  listUserEntitlements: [Entitlements]
+  getTenantUserProfile(isUnique: Boolean): User
+  getTenantProfileByUser(tenantId: String, userId: String): User
+  getTenantUserMasterPermissionProfile(
+    externalTenantId: String
+    externalUserId: String
+  ): PermissionProfileDetails
+  getTenantUsers(workspaceID: ID): UsersList
+  getTenantHierarchy: TenantHierarchy
+  getSsoApplicationDetails(externalApplicationId: String): SsoApplicationDetails
+  getTenantApplications(cursor: String): TenantApplicationList
+  getTenantApplication(applicationId: String): ApplicationDetails
+  getUserEntitlementEntitiesByUser(
+    tenantId: String
+    userId: String
+    group: String
+    value: String
+  ): EntityList
+  getUserEntitlementEntities: EntityList
+  listNotifications(
+    cursor: String
+    startDate: String
+    endDate: String
+    isRead: Boolean
+  ): NotificationList
+  getTenantActionTypeConfiguration: ActionTypeList
+  getTenantUserActionConfiguration: UserActionConfigurationList
+  getSystemStatus: StatusType
+  listAccountsListTimeseries(
+    workspaceID: ID!
+    accountIdList: [String!]
+    numberOfDays: Int
+  ): TimeseriesList
+  listAccountTimeseries(accountID: ID!, numberOfDays: Int): TimeseriesList
+  getTenantEntities(externalTenantId: String!): EntityList
+  getTenantEntityAccounts(
+    externalTenantId: String!
+    externalEntityId: String!
+  ): AccountIdentityList
+  getTenantEntityUsers(
+    externalTenantId: String!
+    externalEntityId: String!
+  ): UserList
+  getTenantEntity(
+    externalTenantId: String!
+    externalEntityId: String!
+  ): EntityDetails
+  listAccountTransactionsSearch(
+    accountID: ID!
+    cursor: String
+    searchFilters: [searchFilter!]!
+  ): TransactionList
+  getTenantEnrollmentEntitlementsGroups(
+    externalTenantId: String!
+    limit: Int
+    cursor: String
+    itemType: ItemType
+    userType: UserType
+  ): EntitlementsGroupList
+  checkUsernameOrEmailExists(
+    tenantId: String
+    userName: String
+    email: String
+  ): Boolean
+  listWorkspaceDesigns(
+    viewPort: ViewPort
+    platform: Platform
+  ): WorkspaceDesignList
+  getWorkspaceDesign(
+    externalWorkspaceId: String
+    viewPort: ViewPort
+    platform: Platform
+  ): WorkspaceDesign
+  getTotalWorkspaceBalances(userId: String): WorkspaceList
+  getTenantUserMessages(cursor: String, limit: Int): ThreadList
+  getTenantUserMessageTopics: TopicList
+  getTenantTransactionTypes(cursor: String, limit: Int): TransactionTypesList
+  getTenantUserExchanges(
+    cursor: String
+    limit: Int
+    workspaceID: ID!
+  ): ExchangeTransactionsList
+  getTenantFeatureFlags: FeatureFlagsList
+  deleteTenantUserAccount(accountId: ID!): String
+  getMyUnacceptedTerms: UserTermList
+  getACHBlackoutDatesAndTime(
+    includeHistorical: Boolean
+  ): FederalHolidaysUserResponse
+  viewBanner(channel: Channel!): [BannerResponse]
+}
+
+type RoutingNumber {
+  type: String
+  number: String
+}
+
+type RuleSet {
+  id: ID!
+  externalId: String!
+  externalTenantId: String!
+  externalParentId: String
+  name: String!
+  localized: Boolean
+  inherited: Boolean
+  type: RuleType
+  segment: String!
+  functionDefinition: FunctionDefinition!
+  limits: [Limit]!
+}
+
+type RuleSetList {
+  status: Boolean
+  messages: [String]
+  totalItems: Int
+  nextCursor: String
+  ruleSets: [RuleSet]
+}
+
+input RuleSetPostRequest {
+  name: String!
+  segment: String!
+  functionDefinitionId: String!
+  limits: [LimitRequest]!
+}
+
+input RuleSetPutRequest {
+  id: ID!
+  externalId: String!
+  externalTenantId: String!
+  externalParentId: String
+  name: String!
+  segment: String!
+  type: RuleType!
+  functionDefinitionId: String!
+  limits: [LimitRequest]!
+}
+
+enum RuleType {
+  PRODUCTS
+  USERS
+}
+
+type SearchResult {
+  facet: Facet
+  isEnrolled: Boolean
+  account: SearchResultAccount
+  profile: SearchResultUser
+  entity: SearchResultEntity
+}
+
+type SearchResultAccount {
+  id: String
+  type: String
+  number: String
+  name: String
+  balances: BalancesEmployee
+  metaData: MetaData
+}
+
+type SearchResultEntity {
+  id: String
+  name: String
+  taxInformation: [TaxInformation]
+  addresses: [Address]
+  contactPoints: [ContactPoint]
+  metaData: MetaData
+}
+
+type SearchResultIdentity {
+  externalId: String
+  id: String
+  firstname: String
+  lastname: String
+  fullname: String
+  email: String
+  objectType: String
+}
+
+type SearchResultList {
+  status: Boolean
+  messages: [String]
+  totalItems: Int
+  nextCursor: String
+  taxNumber: String
+  results: [SearchResult]
+}
+
+type SearchResultUser {
+  id: String
+  fullname: String
+  firstname: String
+  lastname: String
+  taxInformation: [TaxInformation]
+  addresses: [Address]
+  contactPoints: [ContactPoint]
+  preferences: [Attribute]
+  metaData: MetaData
+}
+
+type SearchResultsResponse {
+  key: String
+  searchResultList: SearchResultList
+}
+
+type Segment {
+  externalId: String
+  externalTenantId: String
+  name: String
+  tier: Int
+  type: String
+  itemTypes: [ItemType]
+  conditions: [Condition]
+}
+
+type SegmentList {
+  status: Boolean
+  messages: [String]
+  totalItems: Int
+  nextCursor: String
+  segments: [Segment]
+}
+
+type SsoApplicationDetails {
+  name: String
+  ssourl: String
+  token: String
+}
+
+type StatementList {
+  status: Boolean
+  messages: String
+  totalItems: Int
+  nextCursor: String
+  documents: [Document]
+}
+
+enum Status {
+  APPROVED
+  REJECTED
+  PENDING
+}
+
+type StatusType {
+  cacheStatus: CacheStatusEnum!
+  coreStatus: CoreStatusEnum!
+}
+
+type Subscription {
+  userNotifications(token: String): [Notification]
+  featureFlagChanged(token: String): [FeatureFlag]
+  userEntitlementChanged(token: String): [Entitlements]
+}
+
+type TaxInformation {
+  type: String
+  taxId: String
+}
+
+type TenantApplicationList {
+  applications: [Application]
+  totalItems: Int
+  nextCursor: String
+}
+
+type TenantHierarchy {
+  id: String
+  externalId: String
+  displayName: String
+  children: [Children]
+}
+
+type Term {
+  id: String
+  externalId: String
+  externalTenantId: String
+  version: String
+  userType: [String]
+  segments: [String]
+  title: String
+  body: String
+  createdDate: String
+  updatedAt: String
+}
+
+type Thread {
+  id: ID!
+  topic: String
+  updatedAt: String
+  assignedToExternalUserId: String
+  assignedToFirstName: String
+  assignedToLastName: String
+  userExternalId: String
+  userFirstName: String
+  userLastName: String
+  status: MessageThreadStatus
+  messages: [Message]
+}
+
+type ThreadList {
+  threads: [Thread]
+  nextCursor: String
+  totalItems: Int
+}
+
+type Timeseries {
+  seriesDateTime: String!
+  runningBalance: Float
+}
+
+type TimeseriesList {
+  totalItems: Int
+  timeseries: [Timeseries]
+}
+
+type Topic {
+  name: String
+  id: String
+  segments: [String]
+}
+
+input TopicInput {
+  name: String
+  segments: [String]
+}
+
+type TopicList {
+  topics: [Topic]
+}
+
+type Transaction {
+  id: ID!
+  accountId: String!
+  status: TransactionStatus!
+  description: String!
+  executedAmount: Float!
+  runningBalance: Float
+  executedCurrencyCode: String
+  direction: TransactionDirection!
+  type: String!
+  transactionType: String!
+  createdDate: String!
+  postedDate: String!
+  executedDate: String!
+  exchangeType: String
+  memo: String
+  mainCategory: String
+  subCategory: String
+  merchantCode: String
+  checkNumber: String
+  latitude: String
+  longitude: String
+  iconReference: String
+}
+
+enum TransactionDirection {
+  DEBIT
+  CREDIT
+}
+
+type TransactionList {
+  totalItems: Int
+  nextCursor: String
+  transactions: [Transaction]
+}
+
+enum TransactionStatus {
+  PENDING
+  POSTED
+  HOLD
+  REJECTED
+}
+
+type TransactionType {
+  id: ID
+  type: String
+  group: String
+}
+
+type TransactionTypesList {
+  totalsItems: Int
+  cursor: String
+  transactionTypes: [TransactionType]
+}
+
+input TransferInformation {
+  instructedAmount: InstructedAmount
+
+  """
+  either this
+  """
+  toAccount: String
+
+  """
+  or these
+  """
+  firstName: String
+  lastName: String
+  businessName: String
+  routingNumber: String
+  accountNumber: String
+  accountType: AccountType
+  accountCategory: AccountCategory
+}
+
+type TransferInformationSigned {
+  instructedAmount: InstructedAmountSigned
+  toAccount: String
+  firstName: String
+  lastName: String
+  businessName: String
+  routingNumber: String
+  accountNumber: String
+  accountType: AccountType
+  accountCategory: AccountCategory
+}
+
+enum TypeEnum {
+  INDIVIDUAL
+  BUSINESS
+  SYSTEM
+  PERSON
+}
+
+input UpdateEntitledAccount {
+  id: String
+  externalId: String
+  externalTenantId: String
+  externalPermissionProfileId: String
+  entitlements: [UpdateEntitlements]
+  entitlementsGroups: [UpdateEntitlementsGroup]
+}
+
+input UpdateEntitledEntity {
+  id: String
+  externalId: String
+  externalTenantId: String
+  type: EntityType
+  subType: String
+  externalPermissionProfileId: String
+  isPrimary: Boolean
+  entitlements: [UpdateEntitlements]
+  entitlementsGroups: [UpdateEntitlementsGroup]
+}
+
+input UpdateEntitlements {
+  id: String
+  externalId: String
+  functionDefinition: UpdateFunctionDefinition
+  permissions: [PermissionEnum]
+}
+
+input UpdateEntitlementsGroup {
+  externalParentId: String
+  localized: Boolean
+  inherited: Boolean
+  externalId: String
+  externalTenantId: String
+  name: String
+  itemTypes: [ItemType]
+  entitlements: [UpdateEntitlements]
+}
+
+input UpdateFunctionDefinition {
+  id: String
+  externalId: String
+  externalTenantId: String
+  group: String
+  value: String
+  category: EntitlementCategory
+  types: [ItemType]
+}
+
+type UpdatePassword {
+  existingPassword: String
+  newPassword: String
+}
+
+input UpdatePermissionProfileDetails {
+  id: String
+  externalId: String
+  externalTenantId: String
+  externalUserId: String
+  defaultWorkspaceExternalId: String
+  type: PermissionProfileType
+  isMaster: Boolean
+  entitledEntities: [UpdateEntitledEntity]
+  entitledAccounts: [UpdateEntitledAccount]
+  userEntitlements: [UpdateEntitlements]
+  userEntitlementsGroups: [UpdateEntitlementsGroup]
+  workspaces: [UpdateWorkspace]
+}
+
+input UpdateTenantUserProfileRequest {
+  externalId: String!
+  username: String
+  firstName: String
+  lastName: String
+  email: String
+  addresses: [AddressesInput]
+  contactPoints: [ContactPointsInput]
+}
+
+input UpdateWorkspace {
+  id: ID!
+  name: String!
+  shortTitle: String!
+  workspaceType: WorkspaceType!
+  isDefault: Boolean
+}
+
+type User {
+  username: String
+  name: String
+  externalId: String
+  externalReference: String
+  externalWorkflowId: String
+  externalTenantId: String
+  externalIDPReference: String
+  status: Status
+  idpStatus: String
+  userRole: UserRole
+  segments: [String]
+  firstName: String
+  lastName: String
+  lastLogin: String
+  email: String
+  emailVerified: Boolean
+  enabled: Boolean
+  userType: UserType
+  allowedActions: [String]
+  entities: [Entities]
+  addresses: [Addresses]
+  contactPoints: [ContactPoints]
+  lastInviteSentAt: String
+}
+
+type UserActionConfiguration {
+  id: ID!
+  actionTypeId: String!
+  actionType: String!
+  target: String
+  input: String
+  notifications: [String!]!
+  status: String!
+}
+
+type UserActionConfigurationList {
+  actionConfiguration: [UserActionConfiguration!]!
+}
+
+input UserActionRequest {
+  actionTypeId: String
+  target: String
+  input: String
+  status: String
+  notifications: [String]
+}
+
+type UserEmployee {
+  externalId: String
+  name: String
+  username: String
+  status: Status
+  idpStatus: String
+  dateOfBirth: String
+  userType: UserType
+  segments: [String]
+  firstName: String
+  lastName: String
+  fullName: String
+  lastLogin: String
+  email: String
+  entities: [EntityEmployee]
+  addresses: [Addresses]
+  contactPoints: [ContactPoints]
+  taxInformation: [TaxInformation]
+}
+
+type UserLimitSummary {
+  fullName: String
+  entityLimits: [EntityLimits]
+}
+
+type UserList {
+  status: Boolean
+  messages: [String]
+  totalItems: Int
+  nextCursor: String
+  users: [User]
+}
+
+type UserProfile {
+  externalId: String
+  username: String
+  firstName: String
+  lastName: String
+  email: String
+  addresses: [Addresses]
+  contactPoints: [ContactPoints]
+}
+
+type UserProfileResponse {
+  userProfile: UserEmployee
+  entitledEntityAccounts: [EntitledEntityAccounts]
+}
+
+enum UserRole {
+  USER
+  EMPLOYEE
+  UNDEFINED
+}
+
+enum UserStatus {
+  LOCK
+  UNLOCK
+}
+
+type UserTerm {
+  term: Term
+  isAccepted: Boolean
+  acceptedDate: String
+}
+
+type UserTermList {
+  userTerms: [UserTerm]
+}
+
+enum UserType {
+  PLATFORM_ADMIN
+  TENANT_ADMIN
+  BANK_ADMIN
+  ENTITY_ADMIN
+  AUTHORIZED
+}
+
+type UsersList {
+  users: [User!]!
+}
+
+type Variables {
+  showNotificationIcon: Boolean
+  showWorkspaceSwitcherOnRight: Boolean
+  showSelectedWorkspaceTitle: Boolean
+  toggleBottomBorderOn: Boolean
+  isHomeScreen: Boolean
+  combineCheckingSavingsCategory: Boolean
+  redirectDetailsToggle: Boolean
+  sideBarColorToggle: Boolean
+  useAccountNicknameToggle: Boolean
+  bankAccountColor: String
+  creditAccountColor: String
+  loanAccountColor: String
+  externalAccountColor: String
+  graphType: String
+  canCollapse: Boolean
+  trailingActionType: String
+  showExportButton: Boolean
+  canTransactionCollapse: Boolean
+  showCardOptions: Boolean
+  showManageCardSection: Boolean
+  showAccountDetailsSection: Boolean
+  showAccountInfoSection: Boolean
+  showBalanceInfoSection: Boolean
+  showInterestInfoSection: Boolean
+  showInterestRateInInterestSection: Boolean
+  gradientColors: [String]
+}
+
+enum ViewPort {
+  X_SMALL
+  SMALL
+  MEDIUM
+  LARGE
+  X_LARGE
+}
+
+type Workspace {
+  id: ID!
+  name: String
+  shortTitle: String
+  workspaceType: WorkspaceType
+  totalBalance: BalanceItem
+  isDefault: Boolean
+}
+
+type WorkspaceDesign {
+  themeName: String
+  viewPort: ViewPort
+  defaultItem: String
+  items: [Items]
+  variables: Variables
+  navigation: [Navigation]
+}
+
+type WorkspaceDesignList {
+  workspaceDesigns: [WorkspaceDesign]
+}
+
+type WorkspaceList {
+  defaultId: ID!
+  workspaces: [Workspace!]!
+}
+
+enum WorkspaceType {
+  RETAIL
+  BUSINESS
+  COMBINE
+  EMPLOYEE
+}
+
+enum itemTypeEnum {
+  DOCUMENT
+  MESSAGE
+  ACCOUNT
+  TRANSACTION
+  USER
+  CARD
+  EXCHANGE
+}
+
+input searchFilter {
+  field: String!
+  operator: OperatorEnum
+  query: String!
+}
+
+enum typeEnum {
+  INFO
+  ERROR
+  WARNING
+  SUCCESS
+  DEBUG
+}

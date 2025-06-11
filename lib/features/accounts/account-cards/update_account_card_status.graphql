@@ -1,0 +1,13 @@
+query UpdateAccountCardStatus(
+  $accountId: ID!
+  $cardId: ID!
+  $cardAction: CardAction!
+) {
+  updateUserCardStatus(
+    accountId: $accountId
+    cardId: $cardId
+    cardAction: $cardAction
+  ) {
+    status
+  }
+}

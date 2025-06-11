@@ -1,0 +1,32 @@
+query FetchAccountCards($accountId: ID!) {
+  getAccountCards(accountId: $accountId) {
+    type
+    id
+    subtype
+    name
+    number
+    startDate
+    expiryDate
+    closeDate
+    holderName
+    network
+    status
+    currencyCode
+    attributes {
+      name
+      value
+    }
+    cardLimit {
+      id
+      channel
+      frequency
+      amount
+      maxAmount
+      minAmount
+      type
+    }
+    accounts {
+      id
+    }
+  }
+}
